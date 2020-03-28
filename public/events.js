@@ -20,9 +20,17 @@ function query(text) { 
     body: JSON.stringify(body)
   })
   .then(res => { return res.json() })
-  .then(e => alert(JSON.stringify(e)))
+  .then(e => {
+    chrome.storage.local.set({response: e}, function() {
+      alert('Value is set to ' + value);
+    });
+
+    chrome.storage.local.get(['response'], function(result) {
+      alert('Value currently is ' + (JSON.stringify(result.response)));
+    });
+  })
   .catch(err => { 
-    alert(err)
+    alert(err);
   }) 
 } 
 
