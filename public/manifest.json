@@ -5,6 +5,7 @@
   "version": "3",
   "description": "Fighting misinformation about the Coronavirus.",
   "permissions": [
+    "storage",
     "contextMenus"
   ],
   "icons": {

@@ -4,3 +4,10 @@ var contextMenuItem = {
   "contexts": ["selection"]
 };
 chrome.contextMenus.create(contextMenuItem);
+
+chrome.contextMenus.onClicked.addListener(function(clickData){
+  console.log("WHOOHOOO", clickData)
+  if (clickData.menuItemId == "verifyInformation" && clickData.selectionText){
+    console.log("WHOOHOOO", clickData)
+  }
+})
