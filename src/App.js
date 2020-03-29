@@ -11,8 +11,8 @@ class App extends Component {
         <h1>
           Coronovirus Fact-Checking
         </h1>
-        <div class="progress">
-          <div class="progress-bar" />
+        <div class="topProgress">
+          <div class="topProgress-bar" />
         </div>
         <h2>
           Fighting the spread of misinformation.

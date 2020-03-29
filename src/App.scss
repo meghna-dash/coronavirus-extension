@@ -47,9 +47,9 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* PROGRESS */
+/* TOP PROGRESS */
 
-.progress {
+.topProgress {
   background-color: $color-progress-bg;
   height: $progress-height;
   position: relative;
@@ -58,7 +58,25 @@ body {
   &-bar {
     animation-duration: 3s;
     animation-name: width;
-    background-image: linear-gradient(to right, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
+    background-image: linear-gradient(to left, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
+    background-size: $progress-width $progress-height;
+    height: 100%;
+    position: relative;
+  }
+}
+
+/* PROGRESS */
+
+.progress {
+  background-color: $color-progress-bg;
+  height: $progress-height * 3;
+  position: relative;
+  width: $progress-width;
+
+  &-bar {
+    animation-duration: 3s;
+    animation-name: progress;
+    background-image: linear-gradient(to left, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
     background-size: $progress-width $progress-height;
     height: 100%;
     position: relative;
@@ -79,6 +97,18 @@ body {
 
   100% {
     width: 100%;
+  }
+
+}
+
+@keyframes progress {
+
+  0%, 100% {
+    transition-timing-function: cubic-bezier(1, 0, .65, .85);
+  }
+
+  0% {
+    width: 0;
   }
 
 }

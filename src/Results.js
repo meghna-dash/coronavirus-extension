@@ -1,5 +1,6 @@
  /*global chrome*/
 import React, { Component } from 'react';
+import { Progress } from 'reactstrap';
 
 class Results extends Component {
   constructor(props) {
@@ -56,8 +57,26 @@ class Results extends Component {
         <br/>
         {this.state.response}
         <br/>
+
+        this.state.response.medical_credibility
+        {this.state.response.medical_credibility}
+        <Progress value={75} />
+        <br/>
+
+        this.state.response.negative_credibility
+        {this.state.response.negative_credibility}
+        <Progress value={75} />
+        <br/>
+
         this.state.response.toxicity
         {this.state.response.toxicity}
+        <Progress value={75} />
+        <br/>
+
+        this.state.response.news_hotness
+        {this.state.response.news_hotness}
+        <Progress value={75} />
+        <br/>
       </div>
     )
   }
