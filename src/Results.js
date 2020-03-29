@@ -11,7 +11,7 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    this.query(chrome.extension.getBackgroundPage().getSelection.toString());
+    this.query(chrome.extension.getBackgroundPage().window.getSelection.toString());
   }
 
   async query(text) { 
