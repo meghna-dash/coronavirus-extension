@@ -36,7 +36,7 @@ class Results extends Component {
     })
     .then(result => {
       this.setState({
-        response: " meeps " + JSON.stringify(result)
+        response: JSON.parse(JSON.stringify(result)).body
       })
     })
     .catch(err => { 
@@ -53,7 +53,11 @@ class Results extends Component {
         {this.state.selection}
         <br/>
         this.state.response
+        <br/>
         {this.state.response}
+        <br/>
+        this.state.response.toxicity
+        {this.state.response.toxicity}
       </div>
     )
   }
