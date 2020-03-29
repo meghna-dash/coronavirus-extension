@@ -5,28 +5,19 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selection: window.getSelection().toString(),
+      selection: "initial selection",
       response: "..."
     };
   }
 
   componentDidMount() {
-    // chrome.storage.sync.get(['response'], function(result) {
-    //   alert(result.json())
-    //   this.setState({
-    //     response: JSON.stringify(result.response)
-    //   })
-    // });
-    var windowSelection = window.getSelection();
-
-    this.setState({
-      selection: windowSelection.toString(),
-    })
-
-    this.query(this.state.selection);
+    this.query(chrome.extension.getBackgroundPage().window.getSelection.toString());
   }
 
   async query(text) { 
+    this.setState({
+      selection: text,
+    })
     var body = { 
       "query": text
     } 
@@ -58,8 +49,8 @@ class Results extends Component {
   render() {
     return (
       <div>
-        this.state.selected
-        {this.state.selected}
+        this.state.selection
+        {this.state.selection}
         <br/>
         this.state.response
         {this.state.response}
