@@ -11,17 +11,15 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    this.query(chrome.extension.getBackgroundPage().window.getSelection.toString());
-  }
-
-  async query(text) { 
+    var text = chrome.extension.getBackgroundPage().window.getSelection.toString();
     this.setState({
       selection: text,
-    })
+    });
     var body = { 
       "query": text
-    } 
-    const url = "https://covid-api.arjungandhi.com/"
+    } ;
+
+    const url = "https://covid-api.arjungandhi.com/";
     fetch(url,
       { 
         method: "POST",
@@ -35,16 +33,18 @@ class Results extends Component {
       return res.json()
     })
     .then(result => {
+      var body = JSON.parse(result.body);
       this.setState({
-        response: JSON.parse(JSON.stringify(result)).body
+        response: body,
       })
     })
     .catch(err => { 
       this.setState({
         response: "error: " + err
       })
-    }) 
-  } 
+    }) ;
+  }
+
 
   render() {
     return (
@@ -52,9 +52,9 @@ class Results extends Component {
         this.state.selection
         {this.state.selection}
         <br/>
-        this.state.response
+        this.state.response.medical_credibility
         <br/>
-        {this.state.response}
+        {this.state.response.medical_credibility}
         <br/>
         this.state.response.toxicity
         {this.state.response.toxicity}
