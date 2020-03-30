@@ -14,7 +14,11 @@ class Results extends Component {
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     var text = chrome.extension.getBackgroundPage().window.getSelection().toString();
+=======
+    var text = chrome.extension.getBackgroundPage().window.getSelection.toString();
+>>>>>>> 2b40a4bdef60e70d3dc7347b4d293ca9ed5077e4
     this.setState({
       selection: text,
     });
@@ -22,6 +26,7 @@ class Results extends Component {
       "query": text
     } ;
 
+<<<<<<< HEAD
     // alert(chrome.extension.getViews()[0].getSelection.toString())
     // alert(chrome.extension.getViews()[1].getSelection.toString())
     // // alert(chrome.extension.getBackgroundPage().window)
@@ -29,6 +34,9 @@ class Results extends Component {
     alert(chrome.extension.getBackgroundPage().window.getSelection().toString())
 
     const url = "http://ec2-54-236-4-7.compute-1.amazonaws.com:5000/";
+=======
+    const url = "https://covid-api.arjungandhi.com/";
+>>>>>>> 2b40a4bdef60e70d3dc7347b4d293ca9ed5077e4
     fetch(url,
       { 
         method: "POST",
@@ -54,10 +62,15 @@ class Results extends Component {
       })
     }) ;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2b40a4bdef60e70d3dc7347b4d293ca9ed5077e4
 
   render() {
     return (
       <div>
+<<<<<<< HEAD
         {this.state.response.negative_credibility > 0.3 ? (
           <div style={{ color: 'red' }}>
             <h3>
@@ -119,6 +132,17 @@ class Results extends Component {
           />
         )) : <div />}
 
+=======
+        this.state.selection
+        {this.state.selection}
+        <br/>
+        this.state.response.medical_credibility
+        <br/>
+        {this.state.response.medical_credibility}
+        <br/>
+        this.state.response.toxicity
+        {this.state.response.toxicity}
+>>>>>>> 2b40a4bdef60e70d3dc7347b4d293ca9ed5077e4
       </div>
     )
   }
