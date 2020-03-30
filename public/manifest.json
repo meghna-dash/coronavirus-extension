@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Coronavirus Extension",
+  "name": "Covfefe-19",
   "author": "Meghna Dash",
   "version": "3",
   "description": "Fighting misinformation about the Coronavirus.",
@@ -8,7 +8,8 @@
     "activeTab",
     "contextMenus",
     "storage",
-    "tabs"
+    "tabs",
+    "<all_urls>"
   ],
   "icons": {
     "16": "small.png",
@@ -22,5 +23,9 @@
     "scripts": ["background.js"],
     "persistent": false
   },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["content.js"]
+  }],
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }

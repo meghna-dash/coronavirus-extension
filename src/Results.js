@@ -8,13 +8,25 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selection: "initial selection",
+      selection: "",
       response: "..."
     };
   }
 
   componentDidMount() {
-    var text = chrome.extension.getBackgroundPage().window.getSelection().toString();
+    var text = "";
+    var _this = this;
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      const port = chrome.tabs.connect(tabs[0].id);
+      port.onMessage.addListener((response) => {
+        text = response.selection;
+        _this.query(text);
+      });
+      port.postMessage({cmd: "select"});
+    })
+  }
+
+  query(text) {
     this.setState({
       selection: text,
     });
@@ -24,30 +36,33 @@ class Results extends Component {
 
     const url = "http://ec2-54-236-4-7.compute-1.amazonaws.com:5000/";
 
-    fetch(url,
-      { 
-        method: "POST",
-        headers: { 
-          "Accept": "application/json",
-          "Content-Type": "application/json" 
-      }, 
-      body: JSON.stringify(body)
-    })
-    .then(res => {
-      return res.json()
-    })
-    .then(result => {
-      var body = JSON.parse(result.body);
-      this.setState({
-        response: body,
+    if (this.state.selection) {
+      fetch(url,
+        { 
+          method: "POST",
+          headers: { 
+            "Accept": "application/json",
+            "Content-Type": "application/json" 
+        }, 
+        body: JSON.stringify(body)
       })
-      alert(result)
-    })
-    .catch(err => { 
-      this.setState({
-        response: "error: " + err
+      .then(res => {
+        return res.json()
       })
-    }) ;
+      .then(result => {
+        var body = JSON.parse(result.body);
+        console.log(body)
+        this.setState({
+          response: body,
+        })
+        alert(result)
+      })
+      .catch(err => { 
+        this.setState({
+          response: "error: " + err
+        })
+      }) ;
+    }
   }
 
   render() {
@@ -110,7 +125,7 @@ class Results extends Component {
         {this.state.response.useful_pages ? this.state.response.useful_pages.map((page, idx) => (
           <LinkCard
             similarity={86}
-            link={page}
+            link={page.link}
           />
         )) : <div />}
       </div>
