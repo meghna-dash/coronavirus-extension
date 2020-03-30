@@ -56,7 +56,7 @@ body {
   width: $progress-width;
 
   &-bar {
-    animation-duration: 3s;
+    animation-duration: 8s;
     animation-name: width;
     background-image: linear-gradient(to left, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
     background-size: $progress-width $progress-height;

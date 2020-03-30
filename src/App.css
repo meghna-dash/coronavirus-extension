@@ -2,6 +2,8 @@
   background-color: white;
   padding: 12px;
   font-family: 'Quicksand', sans-serif;
+  overflow: scroll;
+  height: 500px;
 }
 
 .App-logo {

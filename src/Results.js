@@ -51,11 +51,9 @@ class Results extends Component {
       })
       .then(result => {
         var body = JSON.parse(result.body);
-        console.log(body)
         this.setState({
           response: body,
         })
-        alert(result)
       })
       .catch(err => { 
         this.setState({
@@ -76,12 +74,11 @@ class Results extends Component {
             </h3>
           </div>
         ) : <div/>}
-        <div style={{ textAlign: 'center' }}>
-        <div style={{ background: '#eef6f9', padding: "12px", width: "300px" }}>
-          <table>
+        <div style={{ background: '#eef6f9', width: "300px" }}>
+          <table style={{ marginLeft: '12px' }}>
             <tr>
               <td>
-                <h3>
+                <h3 style={{ textAlign: 'center' }}>
                   Medical Reputation
                 </h3>
                 <CircleProgress
@@ -92,7 +89,7 @@ class Results extends Component {
               </td>
 
               <td>
-                <h3>
+                <h3 style={{ textAlign: 'center' }}>
                   Toxicity
                 </h3>
                 <CircleProgress
@@ -105,7 +102,7 @@ class Results extends Component {
 
             <tr>
               <td>
-                <h3>
+                <h3 style={{ textAlign: 'center' }}>
                   News Virality
                 </h3>
                 <CircleProgress
@@ -117,14 +114,15 @@ class Results extends Component {
             </tr>
           </table>
         </div>
-        </div>
         <br/> <br/>
         <h3>
           Relevant Articles
         </h3>
         {this.state.response.useful_pages ? this.state.response.useful_pages.map((page, idx) => (
           <LinkCard
-            similarity={86}
+            title={page.title}
+            description={page.description}
+            similarity={page.similarity}
             link={page.link}
           />
         )) : <div />}

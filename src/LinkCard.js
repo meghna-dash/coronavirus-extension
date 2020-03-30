@@ -10,7 +10,6 @@ class LinkCard extends Component {
  }
 
  goToLink() {
-   console.log("Beep boop")
    chrome.tabs.create({ url: this.props.link });
  }
 
@@ -37,13 +36,13 @@ class LinkCard extends Component {
           <CardBody>
             <CardText>
               <h3>
-                {psl.get(this.extractHostname(this.props.link))}
+                {this.props.title}
                 {' '}
                 <span class="msc-badge msc-badge__success">
-                  86% similar
+                  {Math.round(this.props.similarity * 100)}% similar
                 </span>
               </h3>
-              {this.props.link.substring(0, 35) + "..."}
+              {this.props.description}
             </CardText>
           </CardBody>
       </Card>
