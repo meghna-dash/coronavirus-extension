@@ -1,6 +1,6 @@
 /* VARIABLES */
 
-$progress-width: 24em;
+$progress-width: 100%;
 $progress-height: .15em;
 
 $line-height: 1.5em;
@@ -69,13 +69,32 @@ body {
 
 .progress {
   background-color: $color-progress-bg;
-  height: $progress-height * 3;
+  height: $progress-height * 8;
+  position: relative;
+  width: $progress-width;
+  min-width: 300px;
+
+  &-bar {
+    animation-duration: 3s;
+    animation-name: progress;
+    background-image: linear-gradient(to left, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
+    background-size: $progress-width $progress-height;
+    height: 100%;
+    position: relative;
+  }
+}
+
+/* SIMILARITY */
+
+.similarity {
+  background-color: $color-progress-bg;
+  height: $progress-height;
   position: relative;
   width: $progress-width;
 
   &-bar {
     animation-duration: 3s;
-    animation-name: progress;
+    animation-name: width;
     background-image: linear-gradient(to left, $color-green, $color-turquoise, $color-blue, $color-light-blue, $color-purple, $color-red);
     background-size: $progress-width $progress-height;
     height: 100%;
@@ -111,4 +130,76 @@ body {
     width: 0;
   }
 
+}
+
+.msc-badge {
+  display: inline-block;
+  font-size: 12px;
+  background: gray;
+  color: #fff;
+  border-radius: 15px;
+  padding: 2px 10px;
+  &__success {
+    background: #2d8f90;
+    color: #fff;
+  }
+  &__alone {
+    background: transparent;
+  }
+}
+
+.msc-badge-alone {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 10px;
+  position: relative;
+  padding-left: 15px;
+  &:before {
+    display: block;
+    content: "";
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    background: gray;
+    color: #fff;
+    left: 0;
+    top: 50%;
+    margin-top: -4px;
+  }
+  &__success {
+    color: #2d8f90;
+    &:before {
+      background: #2d8f90;
+    }
+  }
+}
+
+@-webkit-keyframes antStatusProcessing {
+  0% {
+    -webkit-transform: scale(.8);
+    transform: scale(.8);
+    opacity: .5
+  }
+
+  100% {
+    -webkit-transform: scale(2.4);
+    transform: scale(2.4);
+    opacity: 0
+  }
+
+}
+
+@keyframes antStatusProcessing {
+  0% {
+    -webkit-transform: scale(.8);
+    transform: scale(.8);
+    opacity: .5
+  }
+
+  100% {
+    -webkit-transform: scale(2.4);
+    transform: scale(2.4);
+    opacity: 0
+  }
 }

@@ -1,6 +1,8 @@
  /*global chrome*/
 import React, { Component } from 'react';
-import { Progress } from 'reactstrap';
+import { Card, CardBody, CardDeck, Progress, Row } from 'reactstrap';
+import { CircleProgress } from 'react-gradient-progress';
+import LinkCard from './LinkCard';
 
 class Results extends Component {
   constructor(props) {
@@ -12,17 +14,21 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    this.query(chrome.extension.getBackgroundPage().window.getSelection.toString());
-  }
-
-  async query(text) { 
+    var text = chrome.extension.getBackgroundPage().window.getSelection().toString();
     this.setState({
       selection: text,
-    })
+    });
     var body = { 
       "query": text
-    } 
-    const url = "https://covid-api.arjungandhi.com/"
+    } ;
+
+    // alert(chrome.extension.getViews()[0].getSelection.toString())
+    // alert(chrome.extension.getViews()[1].getSelection.toString())
+    // // alert(chrome.extension.getBackgroundPage().window)
+    // // alert(chrome.extension.getBackgroundPage().window.getSelection)
+    alert(chrome.extension.getBackgroundPage().window.getSelection().toString())
+
+    const url = "http://ec2-54-236-4-7.compute-1.amazonaws.com:5000/";
     fetch(url,
       { 
         method: "POST",
@@ -36,47 +42,83 @@ class Results extends Component {
       return res.json()
     })
     .then(result => {
+      var body = JSON.parse(result.body);
       this.setState({
-        response: JSON.parse(JSON.stringify(result)).body
+        response: body,
       })
+      alert(result)
     })
     .catch(err => { 
       this.setState({
         response: "error: " + err
       })
-    }) 
-  } 
+    }) ;
+  }
 
   render() {
     return (
       <div>
-        this.state.selection
-        {this.state.selection}
-        <br/>
-        this.state.response
-        <br/>
-        {this.state.response}
-        <br/>
+        {this.state.response.negative_credibility > 0.3 ? (
+          <div style={{ color: 'red' }}>
+            <h3>
+              <strong> WARNING: </strong>
+              We found this information on untrustworthy sites.
+            </h3>
+          </div>
+        ) : <div/>}
+        <div style={{ textAlign: 'center' }}>
+        <div style={{ background: '#eef6f9', padding: "12px", width: "300px" }}>
+          <table>
+            <tr>
+              <td>
+                <h3>
+                  Medical Reputation
+                </h3>
+                <CircleProgress
+                  percentage={Math.round(this.state.response.medical_credibility * 100) > 0 ? Math.round(this.state.response.medical_credibility * 100) : 0}
+                  width={100}
+                  fontSize={'23px'}
+                />
+              </td>
 
-        this.state.response.medical_credibility
-        {this.state.response.medical_credibility}
-        <Progress value={75} />
-        <br/>
+              <td>
+                <h3>
+                  Toxicity
+                </h3>
+                <CircleProgress
+                  percentage={Math.round(this.state.response.toxicity * 100) > 0 ? Math.round(this.state.response.toxicity * 100) : 0}
+                  width={100}
+                  fontSize={'23px'}
+                />
+              </td>
+            </tr>
 
-        this.state.response.negative_credibility
-        {this.state.response.negative_credibility}
-        <Progress value={75} />
-        <br/>
+            <tr>
+              <td>
+                <h3>
+                  News Virality
+                </h3>
+                <CircleProgress
+                  percentage={Math.round(this.state.response.news_hotness * 100) > 0 ? Math.round(this.state.response.news_hotness * 100) : 0}
+                  width={100}
+                  fontSize={'23px'}
+                />
+              </td>
+            </tr>
+          </table>
+        </div>
+        </div>
+        <br/> <br/>
+        <h3>
+          Relevant Articles
+        </h3>
+        {this.state.response.useful_pages ? this.state.response.useful_pages.map((page, idx) => (
+          <LinkCard
+            similarity={86}
+            link={page}
+          />
+        )) : <div />}
 
-        this.state.response.toxicity
-        {this.state.response.toxicity}
-        <Progress value={75} />
-        <br/>
-
-        this.state.response.news_hotness
-        {this.state.response.news_hotness}
-        <Progress value={75} />
-        <br/>
       </div>
     )
   }
